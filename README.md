@@ -10,7 +10,18 @@
 - 判断最终结果（同意/拒绝/进行中）
 - 输出简洁的整体总结
 
-## 使用方式
+## 文件结构
+
+```
+email-summary/
+├── README.md      # 使用说明
+├── SKILL.md       # Skill 定义
+├── summary.py     # 汇总脚本
+├── config.json    # 规则配置
+└── upload.sh     # 一键上传脚本
+```
+
+## 快速开始
 
 ### 手动运行
 
@@ -18,55 +29,38 @@
 python3 summary.py [--top N]
 ```
 
-### 定时任务（推荐）
+### 一键上传更新
 
-配置 cronjob 每天自动执行：
+```bash
+./upload.sh
+```
+
+## 配置规则
+
+编辑 `config.json` 自定义关键词和规则：
+
+```json
+{
+  "keywords": {
+    "offer": ["offer", "面试", "入职"],
+    "salary": ["薪资", "奖金", "月薪"]
+  }
+}
+```
+
+## 定时任务
 
 ```bash
 # 每天 1:00 自动执行
-0 1 * * * /usr/bin/python3 /Users/mac/.openclaw/workspace/skills/email-summary/summary.py >> /Users/mac/.openclaw/workspace/logs/邮件汇总.log 2>&1
+0 1 * * * /usr/bin/python3 /path/to/summary.py
 ```
 
-## 输出格式
+## 版本历史
 
-```
-📧 今日邮件汇总
-
-💼 对话1: [主题]
-   结果: ✅ 同意
-   参与人: 张三, 李四
-   信息: 候选人: 王五, Title: VP, 薪资: 20K
-
-💼 对话2: [主题]
-   结果: ⏳ 进行中
-   ...
-```
-
-## 配置
-
-需要提前配置 Outlook 世纪互联 Token：
-- Token 文件：`~/.openclaw/workspace/.outlook_token.txt`
-- API 端点：`microsoftgraph.chinacloudapi.cn`
-
-## 关键词库
-
-| 类别 | 关键词 |
-|------|--------|
-| Offer | offer, 面试, 入职, 签约 |
-| 薪资 | 薪资, 奖金, 月薪, 年薪 |
-| 合同 | 合同, 审批, 协议 |
-| 业务 | CGL, 候选人, 推荐, BD, 客户 |
-
-## 规则
-
-1. 按对话合并，不逐封列出
-2. 只给简洁整体总结
-3. 包含：结果 + 原因 + 核心信息
-4. 避免大段引用原文
-
-## 版本
-
-- V1.1 (2026-03-12): 添加定时任务支持
+| 版本 | 日期 | 更新内容 |
+|------|------|----------|
+| 1.1 | 2026-03-12 | 添加定时任务支持、可配置规则 |
+| 1.0 | 2026-03-12 | 初始版本 |
 
 ## 作者
 
